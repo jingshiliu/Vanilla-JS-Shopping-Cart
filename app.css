@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/**
+* ? Change the default style 
+**/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", 'Courier New', monospace;
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+      Introduced in Internet Explorer 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/**
+* ?  Navbar styles are here
+**/
+.navbar {
+    background-color: #00b4d8;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 60px;
+    color: white;
+    margin-bottom: 50px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+}
+
+.cart {
+    display: flex;
+    padding: 5px;
+    border-radius: 0.2em;
+    background-color: white;
+    color: black;
+    position: relative;
+    width: 30px;
+    text-align: center;
+}
+
+.cartAmount {
+    display: inline-block;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 0.2em;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: white;
+}
+
+
+/*
+ ? Footer styles here 
+*/
+
+footer{
+    height: 150px;
+    background-color: #00b4d8;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+footer button{
+    padding: 0.5em 1em;
+    border-radius: 0.4em;
+    border: none;
+    margin-left: 2em;
+}
+
+footer button:hover{
+    cursor: pointer;
+}
+
+/**
+* ? Shop items styles are here
+**/
+.container {
+    /* padding: 0 15%; */
+}
+
+.shop {
+    display: grid;
+    grid-template-columns: repeat(4, 223px);
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 3em;
+
+}
+
+@media(max-width: 1000px) {
+    .shop {
+        grid-template-columns: repeat(2, 223px);
+    }
+}
+
+@media(max-width: 500px) {
+    .shop {
+        grid-template-columns: repeat(1, 223px);
+    }
+}
+
+.item {
+    border: 1px solid grey;
+    border-radius: 0.5em;
+
+}
+
+.item img {
+    max-width: 100%;
+    border-radius: 0.4em;
+}
+
+.details {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.details p {
+    margin: 10px 0;
+}
+
+.price-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    font-size: x-large;
+}
+
+.button i:first-of-type {
+    color: red;
+}
+
+.button i:last-of-type {
+    color: green;
+}
+
+.button i:hover {
+    cursor: pointer;
+}
+
+.quantity {
+    display: inline-block;
+
+}
+
+
+/**
+* ? Here is styling for the cart item
+*/
+.cartBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+/**
+* ! Styling for empty cart notification
+*/
+
+.emptyCart{
+    text-align: center;
+}
+
+.emptyCart a{
+    display: inline-block;
+    background-color: black;
+    margin: 10px;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+}
+
+.emptyCart a:hover{
+    background-color: #495867;
+}
+
+.displayNone{
+    display: none;
+}
+
+
+/**
+* ? Cart styling
+*/
+
+
+.cartItem {
+    width: 600px;
+    height: 200px;
+    border: 1px solid grey;
+    border-radius: 1em;
+    display: flex;
+    margin-bottom: 3em;
+}
+
+
+
+.cartItem img {
+    height: 100%;
+    border-radius: 1em;
+}
+
+.cartDetails {
+    width: 350px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cartItemHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartItemHeader .unitPrice {
+    color: white;
+    background-color: #00b4d8;
+    padding: 5px 10px;
+    border-radius: 0.2em;
+    position: relative;
+    top: -5px;
+}
+
+.x-icon{
+    color: red;
+    font-size: 30px;
+    position: relative;
+    left: 0.8em;
+}
+
+.x-icon:hover{
+    color:rgb(255, 91, 91);
+    cursor: pointer;
+}
+
+
+.cartDetails .button {
+    margin: 30px auto;
+    font-size: xx-large;
+}
+
+.cartDetails h3 {
+    font-size: x-large;
+    display: inline-block;
+}
+
+.cartDetails .totalPrice {
+    text-align: center;
+    font-size: xx-large;
+}
+
+@media(max-width: 620px) {
+    .cartItem {
+        width: 400px;
+        height: 134px;
+        font-size: 0.6rem;
+    }
+
+    .cartItemHeader h3{
+        font-size: 16px ;
+    }
+
+    .cartDetails .button {
+        margin: 15px auto;
+        font-size: xx-large;
+    }
+
+    .cartDetails .totalPrice {
+        text-align: center;
+        font-size: large;
+    }
+
+    .x-icon{
+        font-size: 25px;
+        position: unset;
+    }
+}
