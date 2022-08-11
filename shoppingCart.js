@@ -92,14 +92,14 @@ if (shoppingCart == null) {
     shoppingCart = shopItemsData.map(curItem => {
         return {
             id: curItem.id,
-            quantity: 0
+            quantity: 0,
         }
     })
 }
 
-const shoppingCartHashMap = {}
+const shoppingCartIndex = {}
 for (let i = 0; i < shopItemsData.length; i++) {
-    shoppingCartHashMap[shopItemsData[i].id] = i
+    shoppingCartIndex[shopItemsData[i].id] = i
 }
 
 let totalQuantity = 0
@@ -110,7 +110,14 @@ for (let x of shoppingCart) {
 const checkEmptyCart = () =>{
     if (totalQuantity === 0) {
         document.querySelector("#emptyCartNotification").classList.toggle('displayNone')
+        // If below condition is true, meaning checkOutButtons is displaying and it should not displayed
+        // Making sure checkout buttons doesn't display when cart is empty
+        if(! document.querySelector('#checkOutButtons').classList.toggle('displayNone')){
+          document.querySelector('#checkOutButtons').classList.toggle('displayNone')
+        }
         return true;
+    }else{
+      document.querySelector('#checkOutButtons').classList.toggle('displayNone')
     }
     return false;
 }
@@ -137,7 +144,7 @@ const update = (quantityElement, change) => {
     }
     quantityElement.innerText = `${newQuantity}`
     cartAmountElement.innerText = `${totalQuantity}`
-    let indexInShoppingCartArray = shoppingCartHashMap[quantityElement.id]
+    let indexInShoppingCartArray = shoppingCartIndex[quantityElement.id]
     shoppingCart[indexInShoppingCartArray].quantity += change
 
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart))
@@ -145,16 +152,49 @@ const update = (quantityElement, change) => {
 
 const removeCartItem = (cartItem, id)=>{
     cartItem.remove()
-    let currentQuantity = shoppingCart[shoppingCartHashMap[id]].quantity
+    let currentQuantity = shoppingCart[shoppingCartIndex[id]].quantity
     let quantityElement = cartItem.querySelector(".quantity")
     update(quantityElement, -currentQuantity)
 }
 
+const clearCart = () =>{
+  for(let item of shoppingCart){
+    item.quantity = 0
+    totalQuantity = 0
+  }
+  cartAmountElement.innerText = '0'
+  localStorage.removeItem('shoppingCart')
+}
+
+const computeTotalPrice = ()=>{
+  let totalPrice = 0
+  for(let i = 0; i < shoppingCart.length; i++){
+    console.log(i)
+    if(shoppingCart[i].quantity > 0){
+      totalPrice += shopItemsData[i].price * shoppingCart[i].quantity
+    }
+  }
+  return totalPrice
+}
 
 const generateCart = () => {
     checkEmptyCart()
+    let clearButton = document.querySelector('.checkOutButtons .clearButton')
+    clearButton.addEventListener('click', () =>{
+      clearCart()
+      checkEmptyCart()
+      cartBody.innerHTML = ''
+    })
+    let purchaseButton = document.querySelector('.checkOutButtons .purchaseButton')
+    purchaseButton.addEventListener('click', ()=>{
+      cartBody.innerText = `Total price is $${computeTotalPrice()}
+      
+      
+      Thank you for shopping with us`;
+      clearCart();
+    })
     for (let item of shopItemsData) {
-        if (shoppingCart[shoppingCartHashMap[item.id]].quantity === 0)
+        if (shoppingCart[shoppingCartIndex[item.id]].quantity === 0)
             continue;
 
         // <div class="cartItem">
@@ -215,7 +255,7 @@ const generateCart = () => {
         })
         // quantity
         let quantityElement = cartItem.querySelector('.quantity')
-        let indexInShoppingCart = shoppingCartHashMap[item.id]
+        let indexInShoppingCart = shoppingCartIndex[item.id]
         quantityElement.innerText = shoppingCart[indexInShoppingCart].quantity
         // total price
         let totalPriceElement = cartItem.querySelector(".totalPrice")
